@@ -1,0 +1,14 @@
+services:
+  nginx-xinference:
+    image: nginx:latest
+    ports:
+      - 10443:443
+    volumes:
+      - ./config-xinference/nginx:/etc/nginx/conf.d
+
+  nginx-langfuse:
+    image: nginx:latest
+    ports:
+      - 11443:443
+    volumes:
+      - ./config-langfuse/nginx:/etc/nginx/conf.d
