@@ -1,0 +1,9 @@
+[submodule "dify"]
+	path = dify
+	url = https://github.com/HPE-TA/dify.git
+[submodule "langfuse"]
+	path = langfuse
+	url = https://github.com/HPE-TA/langfuse.git
+[submodule "firecrawl"]
+	path = firecrawl
+	url = https://github.com/HPE-TA/firecrawl.git
