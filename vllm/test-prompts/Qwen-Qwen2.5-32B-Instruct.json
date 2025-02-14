@@ -1,0 +1,13 @@
+{
+    "model": "Qwen/Qwen2.5-32B-Instruct",
+    "messages": [
+        {
+            "role": "system",
+            "content": "あなたは親切なAIアシスタントです。"
+        },
+        {
+            "role": "user",
+            "content": "仕事の熱意を取り戻すためのアイデアを5つ挙げてください。"
+        }
+    ]
+}
