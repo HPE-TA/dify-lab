@@ -4,17 +4,18 @@
 ## Dify
 
 - 以下のサイズリミットの更新
-    - UPLOAD_FILE_SIZE_LIMIT
-    - UPLOAD_IMAGE_FILE_SIZE_LIMIT
-    - UPLOAD_VIDEO_FILE_SIZE_LIMIT
-    - UPLOAD_AUDIO_FILE_SIZE_LIMIT
-    - NGINX_CLIENT_MAX_BODY_SIZE
+    - UPLOAD_FILE_SIZE_LIMIT=500
+    - UPLOAD_IMAGE_FILE_SIZE_LIMIT=500
+    - UPLOAD_VIDEO_FILE_SIZE_LIMIT=500
+    - UPLOAD_AUDIO_FILE_SIZE_LIMIT=500
+    - NGINX_CLIENT_MAX_BODY_SIZE=500M
+- 以下のタイムアウトの更新
+    - TEXT_GENERATION_TIMEOUT_MS=600000
 
 ## Langfuse
 
 - docker-compose.yaml の以下を書き換える
     - NEXTAUTH_URL を実IPに変更
-    - container_name を削除
 
 ## Firecrawl
 
