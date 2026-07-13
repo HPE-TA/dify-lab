@@ -1,6 +1,20 @@
 # Dify Lab
+<a id="markdown-dify-lab" name="dify-lab"></a>
+
+<!-- TOC -->
+
+- [Dify Lab](#dify-lab)
+  - [Dify](#dify)
+  - [vLLM](#vllm)
+    - [Prometheus/Grafana](#prometheusgrafana)
+  - [Langfuse](#langfuse)
+  - [Firecrawl](#firecrawl)
+
+<!-- /TOC -->
+
 
 ## Dify
+<a id="markdown-dify" name="dify"></a>
 
 `.env` ファイルでの設定変更
 
@@ -67,12 +81,27 @@
 - EXPOSE_PLUGIN_DEBUGGING_PORT=5004
 
 
+## vLLM
+<a id="markdown-vllm" name="vllm"></a>
+
+https://recipes.vllm.ai/
+
+
+### Prometheus/Grafana
+<a id="markdown-prometheus%2Fgrafana" name="prometheus%2Fgrafana"></a>
+
+https://docs.vllm.ai/en/stable/examples/observability/prometheus_grafana/
+
+
+
 ## Langfuse
+<a id="markdown-langfuse" name="langfuse"></a>
 
 - docker-compose.yaml の以下を書き換える
   - NEXTAUTH_URL を実IPに変更
 
 ## Firecrawl
+<a id="markdown-firecrawl" name="firecrawl"></a>
 
 - デフォルトの環境変数ファイル(`apps/api/.env.example`)をルートディレクトリにコピーして以下を編集
   - USE_DB_AUTHENTICATION を false に変更
