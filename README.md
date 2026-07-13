@@ -1,65 +1,79 @@
 # Dify Lab
 
-
 ## Dify
 
-- 以下のサイズリミットの更新
-    - UPLOAD_FILE_SIZE_LIMIT=500
-    - UPLOAD_IMAGE_FILE_SIZE_LIMIT=500
-    - UPLOAD_VIDEO_FILE_SIZE_LIMIT=500
-    - UPLOAD_AUDIO_FILE_SIZE_LIMIT=500
-    - NGINX_CLIENT_MAX_BODY_SIZE=500M
-- 以下のタイムアウトの更新
+`.env` ファイルでの設定変更
+
+- ファイルアップロードサイズリミットの更新
+  - UPLOAD_FILE_SIZE_LIMIT=500
+  - UPLOAD_IMAGE_FILE_SIZE_LIMIT=500
+  - UPLOAD_VIDEO_FILE_SIZE_LIMIT=500
+  - UPLOAD_AUDIO_FILE_SIZE_LIMIT=500
+  - NGINX_CLIENT_MAX_BODY_SIZE=500M
+- ファイルアップロード数リミットの更新
+  - UPLOAD_FILE_BATCH_LIMIT=50
+  - BATCH_UPLOAD_LIMIT=50
+- タイムアウトの更新
     - TEXT_GENERATION_TIMEOUT_MS=600000
+- ナレッジのchunkサイズの拡張
+  - INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH=8000
+- ナレッジのTop kの拡張
+  - TOP_K_MAX_VALUE=20
+- 処理可能なオブジェクト配列、テキスト配列の最大長の拡張
+  - CODE_MAX_OBJECT_ARRAY_LENGTH=100
+  - CODE_MAX_STRING_ARRAY_LENGTH=100
+- アカウント作成時のトークンの有効期限延長
+  - INVITE_EXPIRY_HOURS=240
+- プラグインで画像を扱うための設定
+  - FILES_URL=http://<ip>
+- Unstructured APIを有効化
+  - COMPOSE_PROFILES=`${VECTOR_STORE:-weaviate},${DB_TYPE:-postgresql},collaboration,unstructured`
+  - ETL_TYPE=Unstructured
+  - UNSTRUCTURED_API_URL=http://unstructured:8000/general/v0/general
+- アップロードできるファイルタイプを制限
+  - UPLOAD_FILE_EXTENSION_BLACKLIST=exe,bat,cmd,com,scr,vbs,ps1,msi,dll
+- Weaviateのtokenizerを日本語仕様に変更
+  - WEAVIATE_TOKENIZATION=gse
+  - WEAVIATE_ENABLE_TOKENIZER_GSE=true
+- ハウスキープ有効化
+  - WORKFLOW_LOG_CLEANUP_ENABLED=true
+  - ENABLE_CLEAN_EMBEDDING_CACHE_TASK=true
+  - ENABLE_CLEAN_UNUSED_DATASETS_TASK=true
+  - ENABLE_CLEAN_MESSAGES=true
+- ハウスキープ期間
+  - SANDBOX_EXPIRED_RECORDS_RETENTION_DAYS=60
+  - WORKFLOW_LOG_RETENTION_DAYS=60
+  - PLAN_SANDBOX_CLEAN_DAY_SETTING=60
+
+**Air-Gapped 環境用**
+
+- MARKETPLACE_ENABLED=false
+- CHECK_UPDATE_URL=
+- HOSTED_FETCH_APP_TEMPLATES_MODE=builtin
+- HOSTED_FETCH_APP_TEMPLATES_REMOTE_DOMAIN=
+- HOSTED_FETCH_PIPELINE_TEMPLATES_MODE=builtin
+- HOSTED_FETCH_PIPELINE_TEMPLATES_REMOTE_DOMAIN
+- プラグインインストール時のpythonライブラリダウンロードURL
+  - PIP_MIRROR_URL=http://<ip>:8080/simple
+  - PIP_TRUSTED_HOST=<ip>
+  - PLUGIN_IGNORE_UV_LOCK=true
+
+**Difyのインスタンスをポートずらしで起動するとき**
+
+- EXPOSE_NGINX_PORT=1080
+- EXPOSE_NGINX_SSL_PORT=1443
+- APP_WEB_URL=http://<ip>:1080
+- FILES_URL=http://<ip>:1080
+- EXPOSE_PLUGIN_DEBUGGING_PORT=5004
+
 
 ## Langfuse
 
 - docker-compose.yaml の以下を書き換える
-    - NEXTAUTH_URL を実IPに変更
+  - NEXTAUTH_URL を実IPに変更
 
 ## Firecrawl
 
 - デフォルトの環境変数ファイル(`apps/api/.env.example`)をルートディレクトリにコピーして以下を編集
-    - USE_DB_AUTHENTICATION を false に変更
-    - TEST_API_KEY を fc-Hello-GenA1 に変更
-
-## TLS証明書
-
-### CA 秘密鍵
-```
-openssl genrsa -out ca-key.pem 2048
-```
-
-### CA 証明書署名要求(CSR)
-```
-openssl req -new -key ca-key.pem \
-  -subj "/C=JP/ST=Tokyo/O=HPE/CN=TA Root CA" \
-  -out ta-ca.csr
-```
-
-### CA 証明書(自己署名)
-```
-openssl x509 -req -in ta-ca.csr \
-  -signkey ca-key.pem -out ta-ca.crt -days 3650
-```
-
-### 秘密鍵
-```
-openssl genrsa -out server.key 2048
-```
-
-### 証明書署名要求(CSR)
-```
-openssl req -new -key server.key \
-  -subj "/C=JP/ST=Tokyo/O=HPE/CN=*.example.com" \
-  -out server.csr
-```
-
-### 署名
-```
-openssl x509 -req -days 3650 \
-  -extfile <(printf "subjectAltName=DNS:example.com,DNS:www.example.com") \
-  -in server.csr \
-  -CA ta-ca.crt -CAkey ca-key.pem -CAcreateserial \
-  -out server.crt
-```
+  - USE_DB_AUTHENTICATION を false に変更
+  - TEST_API_KEY を fc-Hello-GenA1 に変更
