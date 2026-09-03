@@ -29,6 +29,7 @@
   - BATCH_UPLOAD_LIMIT=50
 - タイムアウトの更新
     - TEXT_GENERATION_TIMEOUT_MS=600000
+    - WORKFLOW_GENERATION_TIMEOUT_MS=1800000
 - ナレッジのchunkサイズの拡張
   - INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH=8000
 - ナレッジのTop kの拡張
@@ -39,7 +40,7 @@
 - アカウント作成時のトークンの有効期限延長
   - INVITE_EXPIRY_HOURS=240
 - プラグインで画像を扱うための設定
-  - FILES_URL=http://<ip>
+  - FILES_URL=http://...
 - Unstructured APIを有効化
   - COMPOSE_PROFILES=`${VECTOR_STORE:-weaviate},${DB_TYPE:-postgresql},collaboration,unstructured`
   - ETL_TYPE=Unstructured
@@ -58,6 +59,13 @@
   - SANDBOX_EXPIRED_RECORDS_RETENTION_DAYS=60
   - WORKFLOW_LOG_RETENTION_DAYS=60
   - PLAN_SANDBOX_CLEAN_DAY_SETTING=60
+- コラボレーションモードの無効化
+  - ENABLE_COLLABORATION_MODE=false
+- sandboxがprivate networkにアクセスすることを許可する
+  - SSRF_PROXY_ALLOW_PRIVATE_IPS=...
+- Agentが通信するためのAPI tokenをデフォルトから更新する(以下の２つで同じ値を指定する必要がある)
+  - DIFY_AGENT_API_TOKEN
+  - AGENT_BACKEND_API_TOKEN
 
 **Air-Gapped 環境用**
 
@@ -68,16 +76,16 @@
 - HOSTED_FETCH_PIPELINE_TEMPLATES_MODE=builtin
 - HOSTED_FETCH_PIPELINE_TEMPLATES_REMOTE_DOMAIN
 - プラグインインストール時のpythonライブラリダウンロードURL
-  - PIP_MIRROR_URL=http://<ip>:8080/simple
-  - PIP_TRUSTED_HOST=<ip>
+  - PIP_MIRROR_URL=http://...:8080/simple/
+  - PIP_TRUSTED_HOST=...
   - PLUGIN_IGNORE_UV_LOCK=true
 
 **Difyのインスタンスをポートずらしで起動するとき**
 
 - EXPOSE_NGINX_PORT=1080
 - EXPOSE_NGINX_SSL_PORT=1443
-- APP_WEB_URL=http://<ip>:1080
-- FILES_URL=http://<ip>:1080
+- APP_WEB_URL=http://...:1080
+- FILES_URL=http://...:1080
 - EXPOSE_PLUGIN_DEBUGGING_PORT=5004
 
 
